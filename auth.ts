@@ -3,30 +3,56 @@ import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
 import type { Provider } from 'next-auth/providers';
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+
+const prisma = new PrismaClient();
 
 const providers: Provider[] = [
-  GitHub({
-    clientId: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  }),
-  Google({
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  }),
+  // GitHub({
+  //   clientId: process.env.GITHUB_CLIENT_ID,
+  //   clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  // }),
+  // Google({
+  //   clientId: process.env.GOOGLE_CLIENT_ID,
+  //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  // }),
   Credentials({
     credentials: {
       email: { label: 'Email Address', type: 'email' },
       password: { label: 'Password', type: 'password' },
     },
-    authorize(c) {
-      if (c.password === '@demo1' && c.email === 'toolpad-demo@mui.com') {
-        return {
-          id: 'test',
-          name: 'Toolpad Demo',
-          email: String(c.email),
-        };
+    async authorize(credentials) {
+      if (!credentials?.email || !credentials?.password) {
+        return null;
       }
-      return null;
+
+      try {
+        // Find user by email
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email as string },
+        });
+
+        if (!user) {
+          return null;
+        }
+
+        // Verify password
+        const isPasswordValid = await bcrypt.compare(credentials.password as string, user.password);
+
+        if (!isPasswordValid) {
+          return null;
+        }
+
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        };
+      } catch (error) {
+        console.error('Auth error:', error);
+        return null;
+      }
     },
   }),
 ];
