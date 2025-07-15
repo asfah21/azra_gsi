@@ -74,7 +74,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     authorized({ auth: session, request: { nextUrl } }) {
       const isLoggedIn = !!session?.user;
-      const isPublicPage = nextUrl.pathname.startsWith('/public');
+      
+      // Daftar halaman yang bisa diakses tanpa login
+      const publicPages = ['/', '/about', '/contact', '/help'];
+      const isPublicPage = publicPages.includes(nextUrl.pathname) || nextUrl.pathname.startsWith('/public');
 
       if (isPublicPage || isLoggedIn) {
         return true;

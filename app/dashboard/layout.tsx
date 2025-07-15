@@ -2,7 +2,7 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import { DashboardLayout, ThemeSwitcher } from '@toolpad/core/DashboardLayout';
-import Copyright from '../components/Copyright';
+import Copyright from '@/app/components/Copyright';
 import SidebarFooterAccount, { ToolbarAccountOverride } from './SidebarFooterAccount';
 
 function CustomActions() {

@@ -2,8 +2,8 @@
 import * as React from 'react';
 import { Crud } from '@toolpad/core/Crud';
 import { useParams } from 'next/navigation';
-import { employeesDataSource, Employee, employeesCache } from '../../../mocks/employees';
-import CustomDataGrid from '../../../components/CustomDataGrid';
+import { employeesDataSource, Employee, employeesCache } from '@/app/mocks/employees';
+import CustomDataGrid from '@/app/components/CustomDataGrid';
 
 export default function EmployeesCrudPage() {
   const params = useParams();
@@ -13,7 +13,7 @@ export default function EmployeesCrudPage() {
     <Crud<Employee>
       dataSource={employeesDataSource}
       dataSourceCache={employeesCache}
-      rootPath="/employees"
+      rootPath="/dashboard/employees"
       initialPageSize={20}
       defaultValues={{ title: 'New Employee' }}
       pageTitles={{

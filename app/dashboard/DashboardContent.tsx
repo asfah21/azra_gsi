@@ -5,12 +5,12 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import StatCard, { StatCardProps } from '../components/StatCard';
-import HighlightedCard from '../components/HiglightedCard';
-import SessionsChart from '../components/SessionsChart';
-import PageViewsBarChart from '../components/PageViewsBarChart';
-import CustomTreeView from '../components/CustomTreeView';
-import ChartUserByCountry from '../components/ChartUserByCountry';
+import StatCard, { StatCardProps } from '@/app/components/StatCard'
+import HighlightedCard from '@/app/components/HiglightedCard';
+import SessionsChart from '@/app/components/SessionsChart';
+import PageViewsBarChart from '@/app/components/PageViewsBarChart';
+import CustomTreeView from '@/app/components/CustomTreeView';
+import ChartUserByCountry from '@/app/components/ChartUserByCountry';
 
 const data: StatCardProps[] = [
   {

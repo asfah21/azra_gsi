@@ -2,7 +2,7 @@
 import { DataModel, DataSource, DataSourceCache } from '@toolpad/core/Crud';
 import { z } from 'zod';
 
-type EmployeeRole = 'Market' | 'Finance' | 'Development';
+type EmployeeRole = 'super_admin' | 'admin' | 'foreman';
 
 export interface Employee extends DataModel {
   id: number;
@@ -24,13 +24,20 @@ export const employeesDataSource: DataSource<Employee> = {
       headerName: 'Join date',
       type: 'date',
       valueGetter: (value) => value && new Date(value),
-      width: 140,
+      width: 140, 
     },
     {
       field: 'role',
+      headerName: 'Role',
+      type: 'singleSelect',
+      valueOptions: ['super_admin', 'admin', 'foreman'],
+      width: 160,
+    },
+    {
+      field: 'dept',
       headerName: 'Department',
       type: 'singleSelect',
-      valueOptions: ['Market', 'Finance', 'Development'],
+      valueOptions: ['HR', 'GA', 'IT'],
       width: 160,
     },
   ],

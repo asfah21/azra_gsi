@@ -3,6 +3,7 @@ import { NextAppProvider } from '@toolpad/core/nextjs';
 import PersonIcon from '@mui/icons-material/Person';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import MapIcon from '@mui/icons-material/Map';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import type { Navigation } from '@toolpad/core/AppProvider';
 import { SessionProvider, signIn, signOut } from 'next-auth/react';
@@ -15,19 +16,26 @@ const NAVIGATION: Navigation = [
     title: 'Main items',
   },
   {
+    segment: 'dashboard',
     title: 'Dashboard',
     icon: <DashboardIcon />,
   },
   {
-    segment: 'orders',
+    segment: 'dashboard/orders',
     title: 'Orders',
     icon: <ShoppingCartIcon />,
   },
   {
-    segment: 'employees',
+    segment: 'dashboard/employees',
     title: 'Employees',
     icon: <PersonIcon />,
     pattern: 'employees{/:employeeId}*',
+  },
+  {
+    segment: 'dashboard/maps',
+    title: 'Map',
+    icon: <MapIcon />,
+    // pattern: 'employees{/:employeeId}*',
   },
 ];
 
@@ -39,6 +47,7 @@ const AUTHENTICATION = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const session = await auth();
   return (
+    // <html lang="en" data-toolpad-color-scheme="light">
     <html lang="en" data-toolpad-color-scheme="light">
       <body>
         <SessionProvider session={session}>
